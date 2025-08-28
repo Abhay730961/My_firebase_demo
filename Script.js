@@ -3,13 +3,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // 🔑 Firebase Config (अपनी Firebase Console से कॉपी करें)
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBdq5ZiiIr3EVPMfeRNb55UITX5hoYOH2Y",
+  authDomain: "modern-voucher-pro.firebaseapp.com",
+  projectId: "modern-voucher-pro",
+  storageBucket: "modern-voucher-pro.firebasestorage.app",
+  messagingSenderId: "427545654170",
+  appId: "1:427545654170:web:70d4efb1c4d068a67a8023",
+  measurementId: "G-P44RSLYVW5"
 };
 
 // Initialize Firebase
