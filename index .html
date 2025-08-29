@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub + Firebase Demo</title>
+    <meta charset="UTF-8">
+    <title>Contact Form</title>
 </head>
 <body>
-  <h1>Firebase Database Demo (Hosted on GitHub Pages)</h1>
+    <h1>Contact Us</h1>
+    <form id="contact-form">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
 
-  <!-- Form to add data -->
-  <form id="userForm">
-    <input type="text" id="name" placeholder="Enter Name" required>
-    <input type="email" id="email" placeholder="Enter Email" required>
-    <button type="submit">Add User</button>
-  </form>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
 
-  <h2>📋 Users List:</h2>
-  <ul id="userList"></ul>
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" required></textarea><br><br>
 
-  <!-- Firebase Script -->
-  <script type="module" src="script.js"></script>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="status-message"></p>
+
+    <script src="script.js"></script>
 </body>
 </html>
