@@ -1,54 +1,36 @@
+const form = document.getElementById('contact-form');
+const statusMessage = document.getElementById('status-message');
 
-// Firebase SDK Imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+form.addEventListener('submit', async (event) => {
+  event.preventDefault(); // पेज को रीलोड होने से रोकें
 
-// 🔑 Firebase Config (Firebase Console से copy करें)
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBdq5ZiiIr3EVPMfeRNb55UITX5hoYOH2Y",
-  authDomain: "modern-voucher-pro.firebaseapp.com",
-  projectId: "modern-voucher-pro",
-  storageBucket: "modern-voucher-pro.firebasestorage.app",
-  messagingSenderId: "427545654170",
-  appId: "1:427545654170:web:70d4efb1c4d068a67a8023",
-  measurementId: "G-P44RSLYVW5"
-};
+  // फॉर्म से डेटा लें
+  const formData = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value,
+  };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// HTML Elements
-const userForm = document.getElementById("userForm");
-const userList = document.getElementById("userList");
-
-// ✅ Add Data
-userForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
+  statusMessage.textContent = 'Sending...';
 
   try {
-    await addDoc(collection(db, "users"), { name, email });
-    alert("✅ User Added!");
-    loadUsers(); // reload users list
-    userForm.reset();
+    // हमारे Vercel Serverless Function को कॉल करें
+    const response = await fetch('/api/submit-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      statusMessage.textContent = 'Thank you! Your message has been sent.';
+      form.reset(); // फॉर्म को खाली कर दें
+    } else {
+      throw new Error('Something went wrong.');
+    }
   } catch (error) {
-    console.error("Error adding document: ", error);
+    statusMessage.textContent = 'Oops! There was a problem submitting your form.';
+    console.error('Error:', error);
   }
 });
-
-// ✅ Read Data
-async function loadUsers() {
-  userList.innerHTML = ""; // clear old data
-  const querySnapshot = await getDocs(collection(db, "users"));
-  querySnapshot.forEach((doc) => {
-    const li = document.createElement("li");
-    li.textContent = `${doc.data().name} - ${doc.data().email}`;
-    userList.appendChild(li);
-  });
-}
-
-// Load data on page load
-loadUsers();
